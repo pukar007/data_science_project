@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from selenium import webdriver
 import time
@@ -150,9 +152,19 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
 
         #Clicking on the "next page" button
         try:
-            driver.find_element_by_xpath('.//a[@data-test="pagination-next"]').click()
+            
+           # WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH, "//a[@id='poststop' and @name='poststop']//following::table[1]//li[@class='nextButton']/a[contains(.,'Next')]"))).click()
+
+           # nextButton <- remDr$findElement("xpath", "//*[@class = 'next']")
+           # nextButton$clickElement()
+            driver.find_element_by_xpath('.//li[@class="next"]//a').click()
+          #  driver.find_element_by_xpath('.//li[@class="Next"]//a').click()
+            print( 'x out pass')
         except NoSuchElementException:
             print("Scraping terminated before reaching target number of jobs. Needed {}, got {}.".format(num_jobs, len(jobs)))
+            print('x out fail')
             break
 
     return pd.DataFrame(jobs)  #This line converts the dictionary object into a pandas DataFrame. 
+
+
